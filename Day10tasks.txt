@@ -1,0 +1,302 @@
+----------------------------------------------------------------------------------------------------
+Task1
+----------------------------------------------------------------------------------------------------
+
+mysql> select * from student where marks>80;
++------------+--------------+-------+-----------+
+| student_id | student_name | marks | course_id |
++------------+--------------+-------+-----------+
+|          1 | rithishaa    |    90 |         1 |
+|          2 | meenu        |    85 |         1 |
+|          3 | poorva       |    89 |         2 |
+|          5 | rini         |    83 |         3 |
+|          6 | zini         |    81 |         2 |
+|          9 | pavish       |    86 |         5 |
++------------+--------------+-------+-----------+
+6 rows in set (0.02 sec)
+
+----------------------------------------------------------------------------------------------------
+Task2
+----------------------------------------------------------------------------------------------------
+
+mysql> select * from course  order by course_fee asc;
++-----------+------------------+------------+
+| course_id | course_name      | course_fee |
++-----------+------------------+------------+
+|         2 | Accounts         |   15000.00 |
+|         1 | journalism       |   25000.00 |
+|         5 | Computer Science |   35000.00 |
+|         3 | Biology          |   40000.00 |
+|         4 | datascience      |   50000.00 |
++-----------+------------------+------------+
+5 rows in set (0.00 sec)
+
+-----------------------------------------------------------------------------------------------------
+Task3
+-----------------------------------------------------------------------------------------------------
+
+mysql> select * from course where course_name like 'j%';
++-----------+-------------+------------+
+| course_id | course_name | course_fee |
++-----------+-------------+------------+
+|         1 | journalism  |   25000.00 |
++-----------+-------------+------------+
+1 row in set (0.00 sec)
+
+-----------------------------------------------------------------------------------------------------
+Task4
+-----------------------------------------------------------------------------------------------------
+
+mysql> CREATE DATABASE customerDB;
+Query OK, 1 row affected (0.03 sec)
+
+mysql> USE customerDB;
+Database changed
+mysql> CREATE TABLE customers (    customer_id INT PRIMARY KEY AUTO_INCREMENT,    name VARCHAR(100),    email VARCHAR(100),    city VARCHAR(50),    age INT,    registration_date DATE);
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> desc customerDB;
+ERROR 1146 (42S02): Table 'customerdb.customerdb' doesn't exist
+mysql> desc customers;
++-------------------+--------------+------+-----+---------+----------------+
+| Field             | Type         | Null | Key | Default | Extra          |
++-------------------+--------------+------+-----+---------+----------------+
+| customer_id       | int          | NO   | PRI | NULL    | auto_increment |
+| name              | varchar(100) | YES  |     | NULL    |                |
+| email             | varchar(100) | YES  |     | NULL    |                |
+| city              | varchar(50)  | YES  |     | NULL    |                |
+| age               | int          | YES  |     | NULL    |                |
+| registration_date | date         | YES  |     | NULL    |                |
++-------------------+--------------+------+-----+---------+----------------+
+6 rows in set (0.03 sec)
+
+mysql> INSERT INTO customers (name, email, city, age, registration_date)VALUES('Archana', 'archana@gmail.com', 'Chennai', 28, '2023-05-15'),('Bobby', 'bob@example.com', 'Delhi', 35, '2022-11-30'),('Calis', 'calis@example.com', 'Mumbai', 42, '2023-01-10'),('David', 'david@example.com', 'Chennai', 23, '2023-06-01'),('Kavya', 'kavi@example.com', 'Delhi', 30, '2024-03-21');
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select * from customers;
++-------------+---------+-------------------+---------+------+-------------------+
+| customer_id | name    | email             | city    | age  | registration_date |
++-------------+---------+-------------------+---------+------+-------------------+
+|           1 | Archana | archana@gmail.com | Chennai |   28 | 2023-05-15        |
+|           2 | Bobby   | bob@example.com   | Delhi   |   35 | 2022-11-30        |
+|           3 | Calis   | calis@example.com | Mumbai  |   42 | 2023-01-10        |
+|           4 | David   | david@example.com | Chennai |   23 | 2023-06-01        |
+|           5 | Kavya   | kavi@example.com  | Delhi   |   30 | 2024-03-21        |
++-------------+---------+-------------------+---------+------+-------------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from customers where city = 'chennai';
++-------------+---------+-------------------+---------+------+-------------------+
+| customer_id | name    | email             | city    | age  | registration_date |
++-------------+---------+-------------------+---------+------+-------------------+
+|           1 | Archana | archana@gmail.com | Chennai |   28 | 2023-05-15        |
+|           4 | David   | david@example.com | Chennai |   23 | 2023-06-01        |
++-------------+---------+-------------------+---------+------+-------------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from customers where registration_date > '2023-01-01';
++-------------+---------+-------------------+---------+------+-------------------+
+| customer_id | name    | email             | city    | age  | registration_date |
++-------------+---------+-------------------+---------+------+-------------------+
+|           1 | Archana | archana@gmail.com | Chennai |   28 | 2023-05-15        |
+|           3 | Calis   | calis@example.com | Mumbai  |   42 | 2023-01-10        |
+|           4 | David   | david@example.com | Chennai |   23 | 2023-06-01        |
+|           5 | Kavya   | kavi@example.com  | Delhi   |   30 | 2024-03-21        |
++-------------+---------+-------------------+---------+------+-------------------+
+4 rows in set (0.03 sec)
+
+-------------------------------------------------------------------------------------------------------
+Task5
+-------------------------------------------------------------------------------------------------------
+
+mysql> create table department(
+    -> dept_id int primary key,
+    -> dept_name varchar(20),
+    -> location varchar(20));
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> create table employee(
+    -> emp_id int primary key,
+    -> e_name varchar(30),
+    -> job varchar(50),
+    -> sal decimal(10,2),
+    -> hire_date date,
+    -> dept_id int,
+    -> foreign key (dept_id) references department(dept_id));
+Query OK, 0 rows affected (0.09 sec)
+
+mysql> desc employee;
++-----------+---------------+------+-----+---------+-------+
+| Field     | Type          | Null | Key | Default | Extra |
++-----------+---------------+------+-----+---------+-------+
+| emp_id    | int           | NO   | PRI | NULL    |       |
+| e_name    | varchar(30)   | YES  |     | NULL    |       |
+| job       | varchar(50)   | YES  |     | NULL    |       |
+| sal       | decimal(10,2) | YES  |     | NULL    |       |
+| hire_date | date          | YES  |     | NULL    |       |
+| dept_id   | int           | YES  | MUL | NULL    |       |
++-----------+---------------+------+-----+---------+-------+
+6 rows in set (0.03 sec)
+
+mysql> alter table employee add column com decimal(10,2);
+Query OK, 0 rows affected (0.12 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc employee;
++-----------+---------------+------+-----+---------+-------+
+| Field     | Type          | Null | Key | Default | Extra |
++-----------+---------------+------+-----+---------+-------+
+| emp_id    | int           | NO   | PRI | NULL    |       |
+| e_name    | varchar(30)   | YES  |     | NULL    |       |
+| job       | varchar(50)   | YES  |     | NULL    |       |
+| sal       | decimal(10,2) | YES  |     | NULL    |       |
+| hire_date | date          | YES  |     | NULL    |       |
+| dept_id   | int           | YES  | MUL | NULL    |       |
+| com       | decimal(10,2) | YES  |     | NULL    |       |
++-----------+---------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+mysql> insert into department values(1,'FINANCE','ONSITE');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into department values(2,'AUDIT','REMOTE');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into department values(3,'MARKETING','REMOTE');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into department values(4,'PRODUCTION','ONSITE');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into department values(5,'TESTING','ONSITE');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select * from department;
++---------+------------+----------+
+| dept_id | dept_name  | location |
++---------+------------+----------+
+|       1 | FINANCE    | ONSITE   |
+|       2 | AUDIT      | REMOTE   |
+|       3 | MARKETING  | REMOTE   |
+|       4 | PRODUCTION | ONSITE   |
+|       5 | TESTING    | ONSITE   |
++---------+------------+----------+
+5 rows in set (0.00 sec)
+
+mysql> Terminal close -- exit!
+mysql> select * from department;
+ERROR 1046 (3D000): No database selected
+mysql> use FSD_tasks;
+Database changed
+mysql> select * from department;
++---------+------------+----------+
+| dept_id | dept_name  | location |
++---------+------------+----------+
+|       1 | FINANCE    | ONSITE   |
+|       2 | AUDIT      | REMOTE   |
+|       3 | MARKETING  | REMOTE   |
+|       4 | PRODUCTION | ONSITE   |
+|       5 | TESTING    | ONSITE   |
++---------+------------+----------+
+5 rows in set (0.01 sec)
+
+mysql> insert into employee values(1,'JOHN','CLERK',4000,'1981-04-30','1','500');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into employee values(2,'JACK','SALESMAN',3000,'1981-04-15','2','100');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into employee values(3,'SMITH','SALESMAN',5000,'1981-07-30','2','150');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into employee values(4,'WILL','ANALIST',4000,'1981-07-25','5','700');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> ^C
+mysql> insert into employee values(5,'VARUN','CLERK',2000,'1981-04-20','3','500');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into employee values(6,'DHILIP','MANAGER',6000,'1981-12-12','2','100');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into employee values(7,'KARAN','CLEANER',1000,'1981-01-24','4','550');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into employee values(8,'RAYAN','CLERK',3000,'1981-08-11','3','300');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into employee values(9,'HARI','MANAGER',4000,'1981-09-20','2','250');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into employee values(10,'JOHNSON','SALESMAN',1500,'1981-05-17','1','150');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from employee;
++--------+---------+----------+---------+------------+---------+--------+
+| emp_id | e_name  | job      | sal     | hire_date  | dept_id | com    |
++--------+---------+----------+---------+------------+---------+--------+
+|      1 | JOHN    | CLERK    | 4000.00 | 1981-04-30 |       1 | 500.00 |
+|      2 | JACK    | SALESMAN | 3000.00 | 1981-04-15 |       2 | 100.00 |
+|      3 | SMITH   | SALESMAN | 5000.00 | 1981-07-30 |       2 | 150.00 |
+|      4 | WILL    | ANALIST  | 4000.00 | 1981-07-25 |       5 | 700.00 |
+|      5 | VARUN   | CLERK    | 2000.00 | 1981-04-20 |       3 | 500.00 |
+|      6 | DHILIP  | MANAGER  | 6000.00 | 1981-12-12 |       2 | 100.00 |
+|      7 | KARAN   | CLEANER  | 1000.00 | 1981-01-24 |       4 | 550.00 |
+|      8 | RAYAN   | CLERK    | 3000.00 | 1981-08-11 |       3 | 300.00 |
+|      9 | HARI    | MANAGER  | 4000.00 | 1981-09-20 |       2 | 250.00 |
+|     10 | JOHNSON | SALESMAN | 1500.00 | 1981-05-17 |       1 | 150.00 |
++--------+---------+----------+---------+------------+---------+--------+
+10 rows in set (0.00 sec)
+
+
+mysql> select dept_id,avg(sal) as Avg_sal
+    ->  from employee group by dept_id;
++---------+-------------+
+| dept_id | Avg_sal     |
++---------+-------------+
+|       1 | 2750.000000 |
+|       2 | 4500.000000 |
+|       3 | 2500.000000 |
+|       4 | 1000.000000 |
+|       5 | 4000.000000 |
++---------+-------------+
+5 rows in set (0.00 sec)
+
+mysql> select dept_id,max(sal) as Max_sal,min(sal) as Min_sal
+    -> from employee group by dept_id;
++---------+---------+---------+
+| dept_id | Max_sal | Min_sal |
++---------+---------+---------+
+|       1 | 4000.00 | 1500.00 |
+|       2 | 6000.00 | 3000.00 |
+|       3 | 3000.00 | 2000.00 |
+|       4 | 1000.00 | 1000.00 |
+|       5 | 4000.00 | 4000.00 |
++---------+---------+---------+
+5 rows in set (0.00 sec)
+
+mysql> select dept_id ,sum(sal) as total_sal
+    -> from employee
+    -> group by dept_id
+    -> having sum(sal)>5000;
++---------+-----------+
+| dept_id | total_sal |
++---------+-----------+
+|       1 |   5500.00 |
+|       2 |  18000.00 |
++---------+-----------+
+2 rows in set (0.00 sec)
+
+mysql> select e_name,hire_date,dept_id
+    -> from employee where year(hire_date)=1981 and month(hire_date)<=6;
++---------+------------+---------+
+| e_name  | hire_date  | dept_id |
++---------+------------+---------+
+| JOHN    | 1981-04-30 |       1 |
+| JACK    | 1981-04-15 |       2 |
+| VARUN   | 1981-04-20 |       3 |
+| KARAN   | 1981-01-24 |       4 |
+| JOHNSON | 1981-05-17 |       1 |
++---------+------------+---------+
+5 rows in set (0.02 sec)
